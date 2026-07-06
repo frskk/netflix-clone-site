@@ -1,43 +1,56 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import Movie from './Movie';
-import { MdChevronLeft, MdChevronRight} from 'react-icons/md';
+import { useRef } from "react";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import Card from "./Card";
 
+// A titled, horizontally-scrolling carousel of Cards.
+export default function Row({ title, items, isTopTen = false }) {
+  const scroller = useRef(null);
 
-const Row = ({title, fetchURL, rowID}) => {
-  const [movies,setMovies] = useState([])
-
-
-  useEffect(()=>{
-    axios.get(fetchURL).then((response)=>{
-      setMovies(response.data.results)
-    })
-
-  },[fetchURL])
-
-  const slideLeft = () =>{
-    var slider = document.getElementById('slider' + rowID);
-    slider.scrollLeft = slider.scrollLeft - 500;
+  const scroll = (dir) => {
+    const el = scroller.current;
+    if (!el) return;
+    const amount = el.clientWidth * 0.85;
+    el.scrollBy({ left: dir === "left" ? -amount : amount, behavior: "smooth" });
   };
-  const slideRight = () =>{
-    var slider = document.getElementById('slider' + rowID);
-    slider.scrollLeft = slider.scrollLeft + 500;
-  };
+
+  if (!items?.length) return null;
 
   return (
-    <>
-    <h2 className='text-white font-bold md:text-xl p-4'>{title}</h2>
-    <div className='relative flex items-center group'>
-      <MdChevronLeft onClick={slideLeft} className='bg-white left-0 rounded-full absolute opacity-50 hover:opacity-100 cursor-pointer z-10 hidden group-hover:block' size={40} />
-      <div id={'slider' + rowID} className='w-full h-full overflow-x-scroll whitespace-nowrap scroll-smooth scrollbar-hide relative'>
-        {movies.map((item,id)=> (
-          <Movie key={id} item={item}/>
-        ))}
-      </div>
-      <MdChevronRight onClick={slideRight} className='bg-white right-0 rounded-full absolute opacity-50 hover:opacity-100 cursor-pointer z-10 hidden group-hover:block' size={40} />
-    </div>
-    </>
-  )
-}
+    <section className="group/row relative mb-4 md:mb-8">
+      <h2 className="mb-2 px-4 text-base font-semibold text-zinc-200 md:px-12 md:text-xl">
+        {title}
+      </h2>
 
-export default Row
+      <div className="relative">
+        {/* Left arrow */}
+        <button
+          type="button"
+          onClick={() => scroll("left")}
+          aria-label="Scroll left"
+          className="absolute left-0 top-0 z-30 hidden h-full w-12 items-center justify-center bg-black/40 text-white opacity-0 transition hover:bg-black/60 group-hover/row:opacity-100 md:flex"
+        >
+          <FaChevronLeft size={24} />
+        </button>
+
+        <div
+          ref={scroller}
+          className="no-scrollbar flex gap-1.5 overflow-x-auto scroll-smooth px-4 py-4 md:gap-2 md:px-12"
+        >
+          {items.map((movie, i) => (
+            <Card key={movie.id} movie={movie} rank={isTopTen ? i + 1 : undefined} />
+          ))}
+        </div>
+
+        {/* Right arrow */}
+        <button
+          type="button"
+          onClick={() => scroll("right")}
+          aria-label="Scroll right"
+          className="absolute right-0 top-0 z-30 hidden h-full w-12 items-center justify-center bg-black/40 text-white opacity-0 transition hover:bg-black/60 group-hover/row:opacity-100 md:flex"
+        >
+          <FaChevronRight size={24} />
+        </button>
+      </div>
+    </section>
+  );
+}

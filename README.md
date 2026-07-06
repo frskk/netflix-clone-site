@@ -1,70 +1,68 @@
-# Getting Started with Create React App
+# Netflix Clone (Frontend Only)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A pixel-inspired **Netflix UI clone** built with React and Tailwind CSS. This is a
+**frontend-only** demo — there is no backend, no authentication, and no real API.
+All content is dummy data, and imagery uses stable seeded placeholders that fall
+back to CSS gradients if offline.
 
-## Available Scripts
+> ⚠️ This project is a non-commercial UI clone built for learning purposes and is
+> **not affiliated with, endorsed by, or connected to Netflix**. All trademarks
+> belong to their respective owners.
 
-In the project directory, you can run:
+## Features
 
-### `yarn start`
+- 🎬 **Landing page** — hero with email capture, feature sections, and an FAQ accordion
+- 👤 **"Who's watching?"** profile selection screen
+- 🧭 **Browse page** — scroll-aware navbar, cinematic hero billboard, and horizontally
+  scrolling content rows with hover previews
+- 🔝 **Top 10** row with the signature oversized rank numbers
+- 🔍 **Search** by title or genre
+- ➕ **My List** — add/remove titles, persisted in `localStorage`
+- 🪟 **Details modal** — Netflix-style title popup with metadata and actions
+- 📱 Fully responsive (mobile → desktop)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Tech Stack
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- [React 18](https://react.dev/) (Create React App)
+- [React Router 6](https://reactrouter.com/)
+- [Tailwind CSS 3](https://tailwindcss.com/)
+- [React Icons](https://react-icons.github.io/react-icons/)
 
-### `yarn test`
+## Getting Started
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```bash
+# install dependencies
+yarn install     # or: npm install
 
-### `yarn build`
+# start the dev server (http://localhost:3000)
+yarn start       # or: npm start
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+# create a production build
+yarn build       # or: npm run build
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Project Structure
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```
+src/
+├── components/     # Navbar, Billboard, Row, Card, Modal, Footer, NetflixLogo
+├── context/        # MyListContext (localStorage), ModalContext
+├── data/           # movies.js — dummy catalog
+├── pages/          # Landing, Profiles, Browse, MyList, Search
+├── App.js          # routes + providers
+├── index.css       # Tailwind + global styles
+└── index.js        # entry (BrowserRouter)
+```
 
-### `yarn eject`
+## Routes
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+| Path              | Screen                   |
+| ----------------- | ------------------------ |
+| `/`               | Landing (marketing)      |
+| `/profiles`       | Who's watching?          |
+| `/browse`         | Home (billboard + rows)  |
+| `/browse/tv`      | TV Shows                 |
+| `/browse/movies`  | Movies                   |
+| `/browse/new`     | New & Popular            |
+| `/browse/my-list` | My List                  |
+| `/search?q=`      | Search results           |
